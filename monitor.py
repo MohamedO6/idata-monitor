@@ -27,6 +27,9 @@ def send_email(subject, body):
         server.sendmail(EMAIL_FROM, EMAIL_TO, msg.as_string())
 
 async def main():
+    if not EMAIL_FROM or not EMAIL_PASSWORD or not EMAIL_TO:
+        raise ValueError("Missing EMAIL_FROM, EMAIL_PASSWORD, or EMAIL_TO in environment variables.")
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
@@ -42,8 +45,8 @@ async def main():
 
             if not is_blocked:
                 send_email(
-                    "iDATA is open now",
-                    f"The blocked message was NOT found.\n\nURL: {CHECK_URL}\n\nCheck the website now."
+                    "iDATA may be open now",
+                    f"The blocked message was NOT found.\n\nURL: {CHECK_URL}\n\nOpen the website now and check it manually."
                 )
                 print("OPEN")
             else:
@@ -51,6 +54,7 @@ async def main():
 
         except Exception as e:
             print(f"ERROR: {e}")
+            raise
 
         finally:
             await browser.close()
