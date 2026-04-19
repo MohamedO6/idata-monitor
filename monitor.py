@@ -11,8 +11,10 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_TO = os.getenv("EMAIL_TO")
 
 BLOCK_PHRASES = [
-    "test-only-phrase-that-does-not-exist"
+    "sorry, you have been blocked",
+    "blocked"
 ]
+
 
 def send_email(subject, body):
     msg = MIMEText(body, "plain", "utf-8")
