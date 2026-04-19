@@ -12,9 +12,8 @@ EMAIL_TO = os.getenv("EMAIL_TO")
 
 BLOCK_PHRASES = [
     "sorry, you have been blocked",
-    "blocked"
+    "you have been blocked",
 ]
-
 
 def send_email(subject, body):
     msg = MIMEText(body, "plain", "utf-8")
