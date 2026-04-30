@@ -13,6 +13,17 @@ EMAIL_TO = os.getenv("EMAIL_TO")
 BLOCK_PHRASES = [
     "sorry, you have been blocked",
     "you have been blocked",
+    "attention required",
+    "access denied",
+]
+
+OPEN_PHRASES = [
+    "idata",
+    "appointment",
+    "visa",
+    "national visa",
+    "schengen",
+    "register",
 ]
 
 def send_email(subject, body):
@@ -42,15 +53,18 @@ async def main():
             full_text = body_text.lower()
 
             is_blocked = any(phrase in full_text for phrase in BLOCK_PHRASES)
+            looks_like_idata = any(phrase in full_text for phrase in OPEN_PHRASES)
 
-            if not is_blocked:
+            if is_blocked:
+                print("BLOCKED")
+            elif looks_like_idata:
                 send_email(
                     "iDATA may be open now",
-                    f"The blocked message was NOT found.\n\nURL: {CHECK_URL}\n\nOpen the website now and check it manually."
+                    f"iDATA page appears accessible.\n\nURL: {CHECK_URL}\n\nOpen the website now and check booking immediately."
                 )
                 print("OPEN")
             else:
-                print("BLOCKED")
+                print("UNCLEAR")
 
         except Exception as e:
             print(f"ERROR: {e}")
