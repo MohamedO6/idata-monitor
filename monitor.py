@@ -52,17 +52,17 @@ async def main():
             body_text = await page.locator("body").inner_text()
             full_text = body_text.lower()
 
+            is_open = any(phrase in full_text for phrase in OPEN_PHRASES)
             is_blocked = any(phrase in full_text for phrase in BLOCK_PHRASES)
-            looks_like_idata = any(phrase in full_text for phrase in OPEN_PHRASES)
 
-            if is_blocked:
-                print("BLOCKED")
-            elif looks_like_idata:
+            if is_open:
                 send_email(
                     "iDATA may be open now",
                     f"iDATA page appears accessible.\n\nURL: {CHECK_URL}\n\nOpen the website now and check booking immediately."
                 )
                 print("OPEN")
+            elif is_blocked:
+                print("BLOCKED")
             else:
                 print("UNCLEAR")
 
