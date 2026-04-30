@@ -18,11 +18,18 @@ BLOCK_PHRASES = [
 ]
 
 OPEN_PHRASES = [
-    "idata",
+    "idata is an",
     "appointment",
     "visa",
     "national visa",
     "schengen",
+    "register",
+    "idata, türkiye'de",
+    "about",
+    "login",
+    "signin",
+    "sign in",
+    "sign up",
     "register",
 ]
 
